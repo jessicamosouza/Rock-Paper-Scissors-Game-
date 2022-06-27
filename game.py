@@ -1,5 +1,6 @@
-import random
-import get_user_input
+from get_user_input import User
+
 
 choices = ('r', 'p', 's')
-get_user_input.user()
+user = User()
+user.get_user_input(choices)
