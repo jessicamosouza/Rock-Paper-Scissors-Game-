@@ -53,6 +53,19 @@ class Game:
         else:
             return 't'
 
+
+    def print_winner(self):
+        if check_winner == 'w':
+                print("You won!")
+
+        elif check_winner == 'l':
+            print("You lost!")
+
+        elif check_winner == 't':
+            print("Tied. Play again.")
+            # how to start the game again?
+                
+                
 game = Game()
 
 game.input()
