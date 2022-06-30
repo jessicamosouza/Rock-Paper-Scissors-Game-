@@ -2,74 +2,50 @@ import random
 
 
 class Game:
-    def __init__(self):
+    def start(self):
         self.choices = ['r', 'p', 's']
 
-    # get user input
-    def input(self):
-        self.user = input(
-            "Press 'r' for rock, 'p' for paper or 's' for scissors: ")
-        self.user = self.user.lower()
-        print("user chose: ", self.user)  # test
+        user_input = input(
+            "Press 'r' for rock, 'p' for paper or 's' for scissors: ").lower()
+        if not self.is_input_valid(user_input):
+            print("Input invalid. Try again.")
+            self.start()
+            return
 
-    # check user input
-    def check_input(self):
+        comp_input = random.choice(self.choices)
+        user_won = self.did_user_win(comp_input, user_input)
+        self.print_winner(user_won, comp_input)
+
+    def is_input_valid(self, user_input):
         for i in range(len(self.choices)):
-            if self.user == self.choices[i]:
-                print("Correct input")  # meu
-                return i
-        print("Incorrect input. Try again.")
-        game.input()
+            if user_input == self.choices[i]:
+                return True
+        return False
 
-    # get computer random input
+    def did_user_win(self, comp, user):
+        if comp == user:
+            return
 
-    def computer(self):
-        self.comp_input = random.choice(self.choices)
+        elif comp == 'p':
+            return user != 'r'
 
-        print(self.comp_input)
+        elif comp == 'r':
+            return user != 's'
 
-        return self.comp_input
+        elif comp == 's':
+            return user != 'p'
 
-    def check_winner(self):
-        if self.comp_input != self.user:
-            if self.comp_input == 'p':
-                if self.user == 'r':
-                    return 'l'
-                else:
-                    return 'w'
+    def print_winner(self, result, comp_chose):
+        if result:
+            print(f"You won! Computer chose: {comp_chose}")
 
-            elif self.comp_input == 'r':
-                if self.user == 's':
-                    return 'l'
-                else:
-                    return 'w'
-
-            elif self.comp_input == 's':
-                if self.user == 'p':
-                    return 'l'
-                else:
-                    return 'w'
+        elif result == False:
+            print(f"You lost! Computer chose: {comp_chose}")
 
         else:
-            return 't'
-
-
-    def print_winner(self):
-        if check_winner == 'w':
-                print("You won!")
-
-        elif check_winner == 'l':
-            print("You lost!")
-
-        elif check_winner == 't':
             print("Tied. Play again.")
-            # how to start the game again?
-                
-                
-game = Game()
+            self.start()
 
-game.input()
-game.check_input()
-game.computer()
-check_winner = game.check_winner()
-game.print_winner()
+
+game = Game()
+game.start()
